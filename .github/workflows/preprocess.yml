@@ -1,0 +1,29 @@
+name: MLOps Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  preprocess-and-train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas scikit-learn mlflow
+
+      - name: Run preprocessing
+        run: |
+          python scripts/automate_preprocessing.py \
+            --input WA_Fn-UseC_-Telco-Customer-Churn.csv \
+            --output data/processed/
