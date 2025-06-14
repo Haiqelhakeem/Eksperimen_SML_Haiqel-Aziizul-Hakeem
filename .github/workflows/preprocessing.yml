@@ -1,0 +1,33 @@
+name: Preprocess Data
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run preprocessing script
+        run: |
+          python preprocessing/automate_preprocessing.py
+
+      - name: Display Preprocessed Data
+        run: |
+          echo "Preview of telco_preprocessed.csv:"
+          head -n 10 preprocessing/telco_preprocessed.csv

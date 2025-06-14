@@ -7,7 +7,7 @@ def auto_preprocess(data_path):
     # Load data
     df = pd.read_csv(data_path)
     
-    # Handle missing values
+    # Handle missing values for Total Charges
     df['TotalCharges'] = df['TotalCharges'].replace(' ', '0').astype(float)
     
     # Drop irrelevant column
@@ -42,12 +42,13 @@ def auto_preprocess(data_path):
     # Combine features and target
     combined_data = pd.concat([X_df, y.rename('Churn')], axis=1)
     
-    # Save file
-    output_path = r'C:\Project\Eksperimen_SML_Haiqel-Aziizul-Hakeem\preprocessing\telco_preprocessed.csv'
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    # Save file to preprocessing folder
+    output_dir = "preprocessing"
+    output_path = os.path.join(output_dir, "telco_preprocessed.csv")
+    os.makedirs(output_dir, exist_ok=True)
     combined_data.to_csv(output_path, index=False)
     
     return X, y
 
 if __name__ == "__main__":
-    auto_preprocess("C:\Project\Eksperimen_SML_Haiqel-Aziizul-Hakeem\WA_Fn-UseC_-Telco-Customer-Churn.csv")
+    auto_preprocess("WA_Fn-UseC_-Telco-Customer-Churn.csv")
